@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "229400139440",
+    "project_id": "smart-india-hackathon-c4fc8",
+    "storage_bucket": "smart-india-hackathon-c4fc8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:229400139440:android:b62bf39002f2f8d6e94d75",
+        "android_client_info": {
+          "package_name": "com.example.sih"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9yt3r72u4jDmWgW3seFuJ95YLQ34JG1U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
