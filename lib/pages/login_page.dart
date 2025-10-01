@@ -38,9 +38,9 @@ class _LoginPageState extends State<LoginPage> {
       // case 'policymaker':
       //   nextPage = const PolicymakerDashboardPage();
       //   break;
-      // case 'expert':
-      //   nextPage = const ExpertDashboardPage();
-      //   break;
+      case 'expert':
+        nextPage = const VetDashboardPage();
+        break;
       default:
         return; // button should be disabled if role not selected
     }

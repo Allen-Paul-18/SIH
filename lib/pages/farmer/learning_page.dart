@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:url_launcher/url_launcher.dart';
-// import 'dart:convert'; // No longer needed
 
 class LearningPage extends StatefulWidget {
   const LearningPage({super.key});
@@ -12,9 +11,7 @@ class LearningPage extends StatefulWidget {
 
 class _LearningPageState extends State<LearningPage> with TickerProviderStateMixin {
   late TabController _tabController;
-  // Initialize Firestore, though it's mock here, the structure is correct.
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  // Dynamic user ID for progress tracking/testing
   final String currentUser = 'farmer_${DateTime.now().millisecondsSinceEpoch % 1000}';
 
   String _searchQuery = '';
@@ -36,7 +33,6 @@ class _LearningPageState extends State<LearningPage> with TickerProviderStateMix
   }
 
   void _initializeLearningContent() {
-    // --- Learning Modules Data (Kept the same structure) ---
     _allModules = [
       // Poultry Farming Modules
       LearningModule(
@@ -47,7 +43,7 @@ class _LearningPageState extends State<LearningPage> with TickerProviderStateMix
         difficulty: 'Beginner',
         duration: '25 min',
         type: 'video',
-        thumbnailUrl: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+        thumbnailUrl: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
         videoUrl: 'https://youtu.be/wuOd5_M9yDQ?si=ZWGctOt66ctNGYzk',
         topics: ['Housing design', 'Ventilation', 'Space requirements', 'Equipment setup'],
         learningObjectives: [
@@ -59,20 +55,20 @@ class _LearningPageState extends State<LearningPage> with TickerProviderStateMix
       ),
       LearningModule(
         id: '2',
-        title: 'Chicken Nutrition and Feeding',
-        description: 'Complete guide to feeding chickens at different life stages.',
-        category: 'poultry',
-        difficulty: 'Intermediate',
-        duration: '30 min',
+        title: 'Pig Housing and Facility Design',
+        description: 'Design efficient and comfortable housing systems for pigs.',
+        category: 'pig',
+        difficulty: 'Beginner',
+        duration: '40 min',
         type: 'video',
-        thumbnailUrl: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+        thumbnailUrl: 'https://images.unsplash.com/photo-1516467508483-a7212febe31a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
         videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-        topics: ['Feed types', 'Nutritional requirements', 'Feeding schedules', 'Water management'],
+        topics: ['Pen design', 'Flooring systems', 'Ventilation', 'Waste management'],
         learningObjectives: [
-          'Calculate proper feed ratios',
-          'Understand nutritional needs by age',
-          'Implement feeding schedules',
-          'Manage water quality'
+          'Design appropriate pen sizes',
+          'Choose proper flooring materials',
+          'Install ventilation systems',
+          'Plan waste management systems'
         ],
       ),
       LearningModule(
@@ -83,7 +79,7 @@ class _LearningPageState extends State<LearningPage> with TickerProviderStateMix
         difficulty: 'Advanced',
         duration: '45 min',
         type: 'video',
-        thumbnailUrl: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+        thumbnailUrl: 'https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
         videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
         topics: ['Vaccination programs', 'Disease symptoms', 'Biosecurity', 'Treatment protocols'],
         learningObjectives: [
@@ -101,7 +97,7 @@ class _LearningPageState extends State<LearningPage> with TickerProviderStateMix
         difficulty: 'Intermediate',
         duration: '35 min',
         type: 'video',
-        thumbnailUrl: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+        thumbnailUrl: 'https://images.unsplash.com/photo-1569288052389-dac9b0ac9edc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
         videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
         topics: ['Laying cycles', 'Nest box management', 'Lighting programs', 'Nutrition for layers'],
         learningObjectives: [
@@ -113,22 +109,23 @@ class _LearningPageState extends State<LearningPage> with TickerProviderStateMix
       ),
 
       // Pig Farming Modules
+
       LearningModule(
         id: '5',
-        title: 'Pig Housing and Facility Design',
-        description: 'Design efficient and comfortable housing systems for pigs.',
-        category: 'pig',
-        difficulty: 'Beginner',
-        duration: '40 min',
+        title: 'Chicken Nutrition and Feeding',
+        description: 'Complete guide to feeding chickens at different life stages.',
+        category: 'poultry',
+        difficulty: 'Intermediate',
+        duration: '30 min',
         type: 'video',
-        thumbnailUrl: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+        thumbnailUrl: 'https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
         videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-        topics: ['Pen design', 'Flooring systems', 'Ventilation', 'Waste management'],
+        topics: ['Feed types', 'Nutritional requirements', 'Feeding schedules', 'Water management'],
         learningObjectives: [
-          'Design appropriate pen sizes',
-          'Choose proper flooring materials',
-          'Install ventilation systems',
-          'Plan waste management systems'
+          'Calculate proper feed ratios',
+          'Understand nutritional needs by age',
+          'Implement feeding schedules',
+          'Manage water quality'
         ],
       ),
       LearningModule(
@@ -139,7 +136,7 @@ class _LearningPageState extends State<LearningPage> with TickerProviderStateMix
         difficulty: 'Intermediate',
         duration: '50 min',
         type: 'video',
-        thumbnailUrl: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+        thumbnailUrl: 'https://images.unsplash.com/photo-1509340841436-d7385ebcd2f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
         videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
         topics: ['Growth phases', 'Feed formulation', 'Feeding systems', 'Water requirements'],
         learningObjectives: [
@@ -157,7 +154,7 @@ class _LearningPageState extends State<LearningPage> with TickerProviderStateMix
         difficulty: 'Advanced',
         duration: '60 min',
         type: 'video',
-        thumbnailUrl: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+        thumbnailUrl: 'https://images.unsplash.com/photo-1593134257782-e89567b7718a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
         videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
         topics: ['Breeding selection', 'Estrus detection', 'Pregnancy management', 'Farrowing care'],
         learningObjectives: [
@@ -175,7 +172,7 @@ class _LearningPageState extends State<LearningPage> with TickerProviderStateMix
         difficulty: 'Advanced',
         duration: '55 min',
         type: 'video',
-        thumbnailUrl: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+        thumbnailUrl: 'https://images.unsplash.com/photo-1590736969955-71cc94901144?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
         videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
         topics: ['Common diseases', 'Vaccination protocols', 'Biosecurity measures', 'Health monitoring'],
         learningObjectives: [
@@ -195,7 +192,7 @@ class _LearningPageState extends State<LearningPage> with TickerProviderStateMix
         difficulty: 'Intermediate',
         duration: '45 min',
         type: 'video',
-        thumbnailUrl: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+        thumbnailUrl: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
         videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
         topics: ['Financial planning', 'Record keeping', 'Marketing', 'Risk management'],
         learningObjectives: [
@@ -213,7 +210,7 @@ class _LearningPageState extends State<LearningPage> with TickerProviderStateMix
         difficulty: 'Intermediate',
         duration: '40 min',
         type: 'video',
-        thumbnailUrl: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+        thumbnailUrl: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
         videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
         topics: ['Environmental impact', 'Renewable energy', 'Waste reduction', 'Organic practices'],
         learningObjectives: [
@@ -246,10 +243,8 @@ class _LearningPageState extends State<LearningPage> with TickerProviderStateMix
     final Uri url = Uri.parse(videoUrl.trim());
 
     try {
-      // Directly launch the URL
       await launchUrl(url, mode: LaunchMode.platformDefault);
 
-      // Track progress in Firestore
       await FirebaseFirestore.instance
           .collection('user_progress')
           .doc('${currentUser}_$moduleId')
@@ -297,7 +292,7 @@ class _LearningPageState extends State<LearningPage> with TickerProviderStateMix
   IconData _getCategoryIcon(String category) {
     switch (category) {
       case 'poultry':
-        return Icons.egg_alt; // Changed to a slightly better icon for poultry
+        return Icons.egg_alt;
       case 'pig':
         return Icons.pets;
       case 'general':
@@ -317,24 +312,57 @@ class _LearningPageState extends State<LearningPage> with TickerProviderStateMix
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Thumbnail (IMPROVEMENT: Replaced image/gradient with a cleaner icon placeholder)
+            // Thumbnail with real images
             Stack(
               children: [
                 Container(
-                  height: 120, // Reduced height for better card density
+                  height: 180,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-                    color: Colors.green.shade700, // Solid primary color background
                   ),
-                  child: Center(
-                    child: Icon( // Display category icon
-                      _getCategoryIcon(module.category),
-                      size: 50,
-                      color: Colors.white,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                    child: Image.network(
+                      module.thumbnailUrl,
+                      height: 180,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Container(
+                          height: 180,
+                          color: Colors.grey[200],
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                          ),
+                        );
+                      },
+                      errorBuilder: (context, error, stackTrace) {
+                        // Fallback to icon if image fails to load
+                        return Container(
+                          height: 180,
+                          decoration: BoxDecoration(
+                            color: Colors.green.shade700,
+                            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                          ),
+                          child: Center(
+                            child: Icon(
+                              _getCategoryIcon(module.category),
+                              size: 60,
+                              color: Colors.white,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),
+                // Duration overlay
                 Positioned(
                   top: 8,
                   right: 8,
@@ -350,6 +378,23 @@ class _LearningPageState extends State<LearningPage> with TickerProviderStateMix
                     ),
                   ),
                 ),
+                // Category icon overlay
+                Positioned(
+                  bottom: 8,
+                  left: 8,
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.black54,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Icon(
+                      _getCategoryIcon(module.category),
+                      size: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
               ],
             ),
 
@@ -359,25 +404,13 @@ class _LearningPageState extends State<LearningPage> with TickerProviderStateMix
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Title and category
-                  Row(
-                    children: [
-                      Icon(
-                        _getCategoryIcon(module.category),
-                        size: 20,
-                        color: Colors.grey[600],
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          module.title,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
+                  // Title
+                  Text(
+                    module.title,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 8),
 
@@ -493,6 +526,34 @@ class _LearningPageState extends State<LearningPage> with TickerProviderStateMix
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // Module image
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.network(
+                          module.thumbnailUrl,
+                          height: 200,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Container(
+                              height: 200,
+                              decoration: BoxDecoration(
+                                color: Colors.green.shade700,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  _getCategoryIcon(module.category),
+                                  size: 60,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+
                       // Title
                       Text(
                         module.title,
@@ -698,7 +759,6 @@ class _LearningPageState extends State<LearningPage> with TickerProviderStateMix
               ),
               const SizedBox(height: 12),
 
-              // IMPROVEMENT: Better empty state message with icon
               if (progressDocs.isEmpty)
                 Center(
                   child: Card(
@@ -723,11 +783,10 @@ class _LearningPageState extends State<LearningPage> with TickerProviderStateMix
               else
                 ...progressDocs.map((doc) {
                   final data = doc.data() as Map<String, dynamic>;
-                  // Safe access with a check in case a module is deleted but progress remains
                   final moduleIndex = _allModules.indexWhere((m) => m.id == data['moduleId']);
 
                   if (moduleIndex == -1) {
-                    return const SizedBox.shrink(); // Skip if module not found
+                    return const SizedBox.shrink();
                   }
 
                   final module = _allModules[moduleIndex];
@@ -808,7 +867,6 @@ class _LearningPageState extends State<LearningPage> with TickerProviderStateMix
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: [
-                          // IMPROVEMENT: FilterChip styling for better visual feedback
                           FilterChip(
                             label: Text(
                               'All',

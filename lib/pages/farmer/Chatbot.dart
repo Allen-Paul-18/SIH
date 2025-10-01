@@ -21,18 +21,14 @@ class _ChatBotPageState extends State<ChatBotPage> {
   @override
   void initState() {
     super.initState();
-    // 🔑 MODEL INITIALIZATION WITH PERSONA, BREVITY, AND TOOLS
     _model = GenerativeModel(
-      // 1. MODEL: Use a model that supports function calling, like gemini-1.5-flash
-      model: 'gemini-2.0-flash', // Corrected model name
+      model: 'gemini-1.5-flash',
       apiKey: apiKey,
-      // 2. PERSONA & SCOPE: Force the model to act as an agri-expert.
       systemInstruction: Content.system(
         "You are 'AgriBot,' a helpful, short, and precise livestock expert. Only provide information related to pig and poultry health, biosecurity, feed, housing, breeding, pest control, or market prices. Politely and briefly decline any non-livestock-related questions. Your answers must be short and direct, typically one to two sentences.",
       ),
-      // 3. BREVITY & TOOLS: Configure token limits and enable Google Search.
       generationConfig: GenerationConfig(
-        maxOutputTokens: 100, // For short responses
+        maxOutputTokens: 100,
       ),
     );
   }
@@ -48,21 +44,20 @@ class _ChatBotPageState extends State<ChatBotPage> {
     _controller.clear();
 
     try {
-      // Generate content using the pre-configured model.
-      // No need to pass config here as it's part of the model.
       final response = await _model.generateContent([Content.text(message)]);
-
       final reply = response.text ?? "Sorry, I couldn't fetch the precise agricultural response.";
-
       setState(() {
         _messages.add({'sender': 'bot', 'text': reply});
-        _isLoading = false;
       });
-
     } catch (e) {
-      // Provide a more user-friendly error message
       setState(() {
-        _messages.add({'sender': 'bot', 'text': 'Error: Could not get response. Please check your connection and API key.'});
+        _messages.add({
+          'sender': 'bot',
+          'text': 'Error: Could not get response. Please check your connection and API key.'
+        });
+      });
+    } finally {
+      setState(() {
         _isLoading = false;
       });
     }
@@ -73,58 +68,99 @@ class _ChatBotPageState extends State<ChatBotPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Agri Chatbot'),
+        elevation: 1,
       ),
       body: Column(
         children: [
           Expanded(
             child: ListView.builder(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(16),
               itemCount: _messages.length,
               itemBuilder: (context, index) {
                 final msg = _messages[index];
-                final isUser = msg['sender'] == 'user';
-                return Align(
-                  alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(vertical: 4),
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: isUser ? Colors.green[200] : Colors.grey[300],
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(msg['text']!),
-                  ),
-                );
+                return _buildMessage(msg['text']!, msg['sender'] == 'user');
               },
             ),
           ),
           if (_isLoading)
             const Padding(
               padding: EdgeInsets.all(8.0),
-              child: CircularProgressIndicator(),
+              child: Text('Bot is typing...'),
             ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _controller,
-                    decoration: const InputDecoration(
-                      hintText: 'Ask about crops, prices, or pests...',
-                      border: OutlineInputBorder(),
-                    ),
-                    onSubmitted: _sendMessage,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                IconButton(
-                  icon: const Icon(Icons.send),
-                  onPressed: () => _sendMessage(_controller.text),
-                  color: Colors.green,
-                ),
-              ],
+          _buildInputField(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMessage(String text, bool isUser) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+        children: [
+          if (!isUser)
+            const CircleAvatar(
+              child: Icon(Icons.android),
             ),
+          const SizedBox(width: 8),
+          Flexible(
+            child: Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: isUser ? Theme.of(context).primaryColorLight : Colors.grey[200],
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Text(text),
+            ),
+          ),
+          const SizedBox(width: 8),
+          if (isUser)
+            const CircleAvatar(
+              child: Icon(Icons.person),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInputField() {
+    return Container(
+      padding: const EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 4,
+            offset: const Offset(0, -2),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: TextField(
+              controller: _controller,
+              decoration: InputDecoration(
+                hintText: 'Ask about crops, prices, or pests...',
+                filled: true,
+                fillColor: Colors.grey[100],
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(24),
+                  borderSide: BorderSide.none,
+                ),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+              ),
+              onSubmitted: _sendMessage,
+            ),
+          ),
+          const SizedBox(width: 8),
+          IconButton(
+            icon: const Icon(Icons.send),
+            onPressed: () => _sendMessage(_controller.text),
+            color: Theme.of(context).primaryColor,
           ),
         ],
       ),

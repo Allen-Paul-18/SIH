@@ -18,6 +18,13 @@ dependencies:
   image_picker: ^1.2.0
   video_player: ^2.10.0
   url_launcher: ^6.3.2
+  google_fonts: ^6.3.2
+  google_maps_flutter: ^2.2.3
+  intl: ^0.18.0
+  csv: ^5.0.1
+  path_provider: ^2.0.14
+  open_file: ^3.2.1
+  pdf: ^3.10.1
 
 dev_dependencies:
   flutter_test:
