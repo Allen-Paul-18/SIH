@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:csv/csv.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:open_file/open_file.dart';
-import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 /* ========== ENTRY-POINT (optional) ========== */
@@ -33,7 +32,7 @@ class _DiseaseApp extends StatelessWidget {
                    MAIN SCREEN (TAB LAYOUT)
 ========================================================= */
 class DiseaseLogScreen extends StatefulWidget {
-  const DiseaseLogScreen({Key? key}) : super(key: key);
+  const DiseaseLogScreen({super.key});
 
   @override
   State<DiseaseLogScreen> createState() => _DiseaseLogScreenState();

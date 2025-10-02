@@ -9,7 +9,7 @@ void main() {
 }
 
 class VetDashboardPage extends StatelessWidget {
-  const VetDashboardPage({Key? key}) : super(key: key);
+  const VetDashboardPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class VetDashboardPage extends StatelessWidget {
 }
 
 class ExpertMainPage extends StatefulWidget {
-  const ExpertMainPage({Key? key}) : super(key: key);
+  const ExpertMainPage({super.key});
 
   @override
   _ExpertMainPageState createState() => _ExpertMainPageState();
@@ -88,7 +88,7 @@ class _ExpertMainPageState extends State<ExpertMainPage> {
 
 
 class VetDashboard extends StatelessWidget {
-  const VetDashboard({Key? key}) : super(key: key);
+  const VetDashboard({super.key});
 
   @override
   Widget build(BuildContext context) {

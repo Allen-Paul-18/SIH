@@ -3,6 +3,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'firebase_options.dart';
 import 'pages/login_page.dart';
+import 'pages/expert/chat.dart';
+import 'pages/farmer/farmer_dashboard_page.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -101,7 +104,8 @@ class _AnimatedLaunchState extends State<_AnimatedLaunch>
       if (mounted) {
         Navigator.of(context).pushReplacement(
           PageRouteBuilder(
-            pageBuilder: (_, __, ___) => const LoginPage(),
+            // pageBuilder: (_, __, ___) => const LoginPage(),
+            pageBuilder: (_, __, ___) => const FarmerDashboardPage(),
             transitionsBuilder: (_, anim, __, child) =>
                 FadeTransition(opacity: anim, child: child),
             transitionDuration: const Duration(milliseconds: 400),

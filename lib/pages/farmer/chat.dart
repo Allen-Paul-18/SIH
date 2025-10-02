@@ -4,7 +4,7 @@ import 'package:intl/intl.dart'; // For formatting timestamps
 
 // --- Mock User Authentication ---
 // Replace this with your actual Firebase Auth logic
-const String currentExpertId = 'expert_user_123';
+const String currentExpertId = 'farmer_user_123';
 
 class VetFarmerChatPage extends StatelessWidget {
   const VetFarmerChatPage({super.key});

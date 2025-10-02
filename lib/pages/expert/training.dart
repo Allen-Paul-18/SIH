@@ -5,7 +5,7 @@ void main() {
 }
 
 class TrainingVerificationPage extends StatelessWidget {
-  const TrainingVerificationPage({Key? key}) : super(key: key);
+  const TrainingVerificationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class TrainingVerificationPage extends StatelessWidget {
 }
 
 class TrainingVerificationScreen extends StatefulWidget {
-  const TrainingVerificationScreen({Key? key}) : super(key: key);
+  const TrainingVerificationScreen({super.key});
 
   @override
   State<TrainingVerificationScreen> createState() =>
